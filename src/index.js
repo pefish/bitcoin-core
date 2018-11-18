@@ -56,7 +56,8 @@ class Client {
     timeout = 30000,
     username,
     version,
-    wallet
+    wallet,
+    path
   } = {}) {
     if (!_.has(networks, network)) {
       throw new Error(`Invalid network name "${network}"`, { network });
@@ -107,7 +108,7 @@ class Client {
 
     this.request = Promise.promisifyAll(request.defaults({
       agentOptions: this.agentOptions,
-      baseUrl: `${this.ssl.enabled ? 'https' : 'http'}://${this.host}:${this.port}`,
+      baseUrl: `${this.ssl.enabled ? 'https' : 'http'}://${this.host}:${this.port}${path}`,
       strictSSL: this.ssl.strict,
       timeout: this.timeout
     }), { multiArgs: true });
