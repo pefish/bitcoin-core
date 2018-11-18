@@ -1,0 +1,109 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.3.2/libexec/bin/yarn.js
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Users/joy/bin:/usr/local/mysql/bin:/usr/local/go/bin:/Users/joy/bin/depot_tools:/Users/joy/go/bin:/Users/joy/Applications/google-cloud-sdk/bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  8.12.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "p_bitcoin-core",
+    "version": "2.0.0",
+    "description": "A modern Bitcoin Core REST and RPC client.",
+    "keywords": [
+      "bitcoin",
+      "bitcoind",
+      "client",
+      "request",
+      "rest",
+      "rpc"
+    ],
+    "homepage": "https://github.com/ruimarinho/bitcoin-core",
+    "bugs": "https://github.com/ruimarinho/bitcoin-core/issues",
+    "license": "MIT",
+    "author": {
+      "name": "Rui Marinho",
+      "email": "ruipmarinho@gmail.com"
+    },
+    "main": "dist/src/index.js",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ruimarinho/bitcoin-core.git"
+    },
+    "scripts": {
+      "changelog": "github_changelog_generator --no-issues --header-label='# Changelog' --future-release=$npm_config_future_release && sed -i '' -e :a -e '$d;N;2,4ba' -e 'P;D' CHANGELOG.md",
+      "cover": "nyc --reporter=html --reporter=text npm test",
+      "dependencies": "docker-compose up -d bitcoind bitcoind-ssl bitcoind-username-only",
+      "lint": "eslint src test",
+      "prepublish": "yarn transpile",
+      "test": "NODE_ENV=test mocha $npm_package_options_mocha",
+      "testdocker": "docker-compose run --rm sut",
+      "transpile": "rm -rf dist/* && babel src --out-dir dist/src",
+      "version": "yarn changelog --future-release=$npm_package_version && npm run transpile && git add -A CHANGELOG.md dist"
+    },
+    "dependencies": {
+      "@uphold/request-logger": "^2.0.0",
+      "bluebird": "^3.4.1",
+      "debugnyan": "^1.0.0",
+      "json-bigint": "^0.2.0",
+      "lodash": "^4.0.0",
+      "request": "^2.53.0",
+      "semver": "^5.1.0",
+      "standard-error": "^1.1.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "7.0.0-beta.32",
+      "@babel/core": "7.0.0-beta.32",
+      "@babel/plugin-transform-async-to-generator": "7.0.0-beta.32",
+      "@babel/polyfill": "7.0.0-beta.32",
+      "@babel/preset-env": "7.0.0-beta.32",
+      "@babel/register": "7.0.0-beta.32",
+      "babel-eslint": "^8.0.0",
+      "babel-plugin-istanbul": "^4.1.5",
+      "eslint": "4.11.0",
+      "eslint-config-uphold": "0.0.1",
+      "mocha": "^4.0.1",
+      "nock": "^9.1.0",
+      "nyc": "^11.3.0",
+      "pre-commit": "^1.1.2",
+      "should": "^13.1.3"
+    },
+    "engines": {
+      "node": ">=4"
+    },
+    "nyc": {
+      "include": [
+        "src/"
+      ],
+      "instrument": false,
+      "report-dir": "./coverage",
+      "sourceMap": false
+    },
+    "options": {
+      "mocha": "--require @babel/register --require @babel/polyfill --timeout 20000 --recursive --require should"
+    },
+    "pre-commit": [
+      "lint"
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@uphold%2frequest-logger: ETIMEDOUT
+      at Timeout._onTimeout (/usr/local/Cellar/yarn/1.3.2/libexec/lib/cli.js:123749:19)
+      at ontimeout (timers.js:498:11)
+      at tryOnTimeout (timers.js:323:5)
+      at Timer.listOnTimeout (timers.js:290:5)
